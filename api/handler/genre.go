@@ -19,12 +19,14 @@ func (h *Handler) CreateGenre(ctx *gin.Context) {
 	arr := &pb.Genre{}
 	err := ctx.BindJSON(arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	_, err = h.Genre.CreateGenre(ctx, arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -44,13 +46,15 @@ func (h *Handler) UpdateGenre(ctx *gin.Context) {
 	arr := pb.Genre{}
 	err := ctx.BindJSON(&arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 	arr.Id = ctx.Param("id")
 
 	_, err = h.Genre.UpdateGenre(ctx, &arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -69,7 +73,8 @@ func (h *Handler) DeleteGenre(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
 	_, err := h.Genre.DeleteGenre(ctx, &id)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -90,7 +95,8 @@ func (h *Handler) GetAllGenres(ctx *gin.Context) {
 
 	res, err := h.Genre.GetAllGenres(ctx, genre)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, res)
@@ -109,7 +115,8 @@ func (h *Handler) GetByIdGenre(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
 	res, err := h.Genre.GetByIdGenre(ctx, &id)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, res)

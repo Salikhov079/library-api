@@ -19,12 +19,14 @@ func (h *Handler) CreateBook(ctx *gin.Context) {
 	arr := &pb.BookReq{}
 	err := ctx.BindJSON(arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	_, err = h.Book.CreateBook(ctx, arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -44,12 +46,14 @@ func (h *Handler) UpdateBook(ctx *gin.Context) {
 	arr := pb.BookRes{}
 	err := ctx.BindJSON(&arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	_, err = h.Book.UpdateBook(ctx, &arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -68,7 +72,8 @@ func (h *Handler) DeleteBook(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
 	_, err := h.Book.DeleteBook(ctx, &id)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -89,7 +94,8 @@ func (h *Handler) GetAllBooks(ctx *gin.Context) {
 
 	res, err := h.Book.GetAllBooks(ctx, book)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, res)
@@ -108,7 +114,8 @@ func (h *Handler) GetByIdBook(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
 	res, err := h.Book.GetByIdBook(ctx, &id)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, res)

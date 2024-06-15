@@ -433,6 +433,198 @@ const docTemplate = `{
                 }
             }
         },
+        "/borrower/create": {
+            "post": {
+                "description": "Create page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrower"
+                ],
+                "summary": "Create Borrower",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "Create",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.BorrowerReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/borrower/delete/{id}": {
+            "delete": {
+                "description": "Delete page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrower"
+                ],
+                "summary": "Delete Borrower",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Borrower ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/borrower/get/{id}": {
+            "get": {
+                "description": "GetById page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrower"
+                ],
+                "summary": "GetById Borrower",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Borrower ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetById Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.BorrowerRes"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetByIdd",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/borrower/getall": {
+            "get": {
+                "description": "GetAll page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrower"
+                ],
+                "summary": "GetAll Borrower",
+                "responses": {
+                    "200": {
+                        "description": "GetAll Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.AllBorrowers"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetAlld",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/borrower/update/{id}": {
+            "put": {
+                "description": "Update page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrower"
+                ],
+                "summary": "Update Borrower",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Borrower ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update",
+                        "name": "Update",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.BorrowerRes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while updated",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/genre/create": {
             "post": {
                 "description": "Create page",
@@ -661,6 +853,17 @@ const docTemplate = `{
                 }
             }
         },
+        "genprotos.AllBorrowers": {
+            "type": "object",
+            "properties": {
+                "borrowers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/genprotos.BorrowerRes"
+                    }
+                }
+            }
+        },
         "genprotos.AllGenres": {
             "type": "object",
             "properties": {
@@ -734,6 +937,43 @@ const docTemplate = `{
                 }
             }
         },
+        "genprotos.BorrowerReq": {
+            "type": "object",
+            "properties": {
+                "book_id": {
+                    "type": "string"
+                },
+                "borrow_date": {
+                    "type": "string"
+                },
+                "return_date": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "genprotos.BorrowerRes": {
+            "type": "object",
+            "properties": {
+                "book": {
+                    "$ref": "#/definitions/genprotos.BookRes"
+                },
+                "borrow_date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "return_date": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/genprotos.UserRes"
+                }
+            }
+        },
         "genprotos.Genre": {
             "type": "object",
             "properties": {
@@ -741,6 +981,23 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "genprotos.UserRes": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "user_name": {
                     "type": "string"
                 }
             }

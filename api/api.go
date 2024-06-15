@@ -44,5 +44,12 @@ func NewGin(h *handler.Handler) *gin.Engine {
 	genre.GET("/getall", h.GetAllGenres)
 	genre.GET("/get/:id", h.GetByIdGenre)
 
+	borrower := r.Group("/borrower")
+	borrower.POST("/create", h.CreateBorrower)
+	borrower.PUT("/update/:id", h.UpdateBorrower)
+	borrower.DELETE("/delete/:id", h.DeleteBorrower)
+	borrower.GET("/getall", h.GetAllBorrowers)
+	borrower.GET("/get/:id", h.GetByIdBorrower)
+
 	return r
 }

@@ -19,12 +19,14 @@ func (h *Handler) CreateAuthor(ctx *gin.Context) {
 	arr := &pb.AuthorReq{}
 	err := ctx.BindJSON(arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	_, err = h.Author.CreateAuthor(ctx, arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -44,13 +46,15 @@ func (h *Handler) UpdateAuthor(ctx *gin.Context) {
 	arr := pb.AuthorRes{}
 	err := ctx.BindJSON(&arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 	arr.Id = ctx.Param("id")
 
 	_, err = h.Author.UpdateAuthor(ctx, &arr)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -69,7 +73,8 @@ func (h *Handler) DeleteAuthor(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
 	_, err := h.Author.DeleteAuthor(ctx, &id)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, "Success!!!")
@@ -90,7 +95,8 @@ func (h *Handler) GetAllAuthors(ctx *gin.Context) {
 
 	res, err := h.Author.GetAllAuthors(ctx, author)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, res)
@@ -109,7 +115,8 @@ func (h *Handler) GetByIdAuthor(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
 	res, err := h.Author.GetByIdAuthor(ctx, &id)
 	if err != nil {
-		panic(err)
+		ctx.JSON(400, err.Error())
+		return
 	}
 
 	ctx.JSON(200, res)
