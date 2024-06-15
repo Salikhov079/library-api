@@ -1,0 +1,487 @@
+basePath: /
+definitions:
+  genprotos.AllAuthors:
+    properties:
+      authors:
+        items:
+          $ref: '#/definitions/genprotos.AuthorRes'
+        type: array
+    type: object
+  genprotos.AllBooks:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/genprotos.BookRes'
+        type: array
+    type: object
+  genprotos.AllGenres:
+    properties:
+      Genres:
+        items:
+          $ref: '#/definitions/genprotos.Genre'
+        type: array
+    type: object
+  genprotos.AuthorReq:
+    properties:
+      biography:
+        type: string
+      name:
+        type: string
+    type: object
+  genprotos.AuthorRes:
+    properties:
+      biography:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  genprotos.BookReq:
+    properties:
+      author_id:
+        type: string
+      genre_id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
+  genprotos.BookRes:
+    properties:
+      author:
+        $ref: '#/definitions/genprotos.AuthorRes'
+      genre:
+        $ref: '#/definitions/genprotos.Genre'
+      id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
+  genprotos.Genre:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: Library service
+  version: "1.0"
+paths:
+  /author/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.AuthorReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Author
+      tags:
+      - Author
+  /author/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete Author
+      tags:
+      - Author
+  /author/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.AuthorRes'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Author
+      tags:
+      - Author
+  /author/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      parameters:
+      - in: query
+        name: biography
+        type: string
+      - in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.AllAuthors'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll Author
+      tags:
+      - Author
+  /author/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.AuthorRes'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while updated
+          schema:
+            type: string
+      summary: Update Author
+      tags:
+      - Author
+  /book/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.BookReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Book
+      tags:
+      - Book
+  /book/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete Book
+      tags:
+      - Book
+  /book/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.BookRes'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Book
+      tags:
+      - Book
+  /book/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      parameters:
+      - in: query
+        name: author_id
+        type: string
+      - in: query
+        name: genre_id
+        type: string
+      - in: query
+        name: summary
+        type: string
+      - in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.AllBooks'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll Book
+      tags:
+      - Book
+  /book/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.BookRes'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while updated
+          schema:
+            type: string
+      summary: Update Book
+      tags:
+      - Book
+  /genre/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Genre'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Genre
+      tags:
+      - Genre
+  /genre/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: Genre ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete Genre
+      tags:
+      - Genre
+  /genre/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: Genre ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.Genre'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Genre
+      tags:
+      - Genre
+  /genre/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      parameters:
+      - in: query
+        name: id
+        type: string
+      - in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.AllGenres'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll Genre
+      tags:
+      - Genre
+  /genre/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: Genre ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Genre'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while updated
+          schema:
+            type: string
+      summary: Update Genre
+      tags:
+      - Genre
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authourization
+    type: apiKey
+swagger: "2.0"
