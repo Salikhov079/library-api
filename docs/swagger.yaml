@@ -116,6 +116,31 @@ info:
   description: Library service
   version: "1.0"
 paths:
+  /author/{id}/books:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.AllBooks'
+        "401":
+          description: Error while GetAll
+          schema:
+            type: string
+      summary: GetAll Author
+      tags:
+      - Author
   /author/create:
     post:
       consumes:
@@ -186,7 +211,7 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.AuthorRes'
         "401":
-          description: Error while GetByIdd
+          description: Error while GetById
           schema:
             type: string
       summary: GetById Author
@@ -199,9 +224,6 @@ paths:
       description: GetAll page
       parameters:
       - in: query
-        name: biography
-        type: string
-      - in: query
         name: name
         type: string
       produces:
@@ -212,7 +234,7 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.AllAuthors'
         "401":
-          description: Error while GetAlld
+          description: Error while GetAll
           schema:
             type: string
       summary: GetAll Author
@@ -319,7 +341,7 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.BookRes'
         "401":
-          description: Error while GetByIdd
+          description: Error while GetById
           schema:
             type: string
       summary: GetById Book
@@ -332,13 +354,7 @@ paths:
       description: GetAll page
       parameters:
       - in: query
-        name: author_id
-        type: string
-      - in: query
-        name: genre_id
-        type: string
-      - in: query
-        name: summary
+        name: authorName
         type: string
       - in: query
         name: title
@@ -351,10 +367,29 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.AllBooks'
         "401":
-          description: Error while GetAlld
+          description: Error while GetAll
           schema:
             type: string
       summary: GetAll Book
+      tags:
+      - Book
+  /book/overdue:
+    get:
+      consumes:
+      - application/json
+      description: Overdue page
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Overdue Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Overdue
+          schema:
+            type: string
+      summary: Overdue Book
       tags:
       - Book
   /book/update/{id}:
@@ -458,7 +493,7 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.BorrowerRes'
         "401":
-          description: Error while GetByIdd
+          description: Error while GetById
           schema:
             type: string
       summary: GetById Borrower
@@ -469,6 +504,13 @@ paths:
       consumes:
       - application/json
       description: GetAll page
+      parameters:
+      - in: query
+        name: borrow_date
+        type: string
+      - in: query
+        name: return_date
+        type: string
       produces:
       - application/json
       responses:
@@ -477,7 +519,7 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.AllBorrowers'
         "401":
-          description: Error while GetAlld
+          description: Error while GetAll
           schema:
             type: string
       summary: GetAll Borrower
@@ -514,6 +556,31 @@ paths:
       summary: Update Borrower
       tags:
       - Borrower
+  /genre/{id}/books:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      parameters:
+      - description: Genre ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.AllBooks'
+        "401":
+          description: Error while GetAll
+          schema:
+            type: string
+      summary: GetAll Genre
+      tags:
+      - Genre
   /genre/create:
     post:
       consumes:
@@ -584,7 +651,7 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.Genre'
         "401":
-          description: Error while GetByIdd
+          description: Error while GetById
           schema:
             type: string
       summary: GetById Genre
@@ -597,9 +664,6 @@ paths:
       description: GetAll page
       parameters:
       - in: query
-        name: id
-        type: string
-      - in: query
         name: name
         type: string
       produces:
@@ -610,7 +674,7 @@ paths:
           schema:
             $ref: '#/definitions/genprotos.AllGenres'
         "401":
-          description: Error while GetAlld
+          description: Error while GetAll
           schema:
             type: string
       summary: GetAll Genre

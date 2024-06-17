@@ -8,6 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type FilterBorrowerF struct {
+	BorrowDate string
+	ReturnDate string
+}
+
 // @Summary 		Create Borrower
 // @Description 	Create page
 // @Tags 			Borrower
@@ -87,22 +92,25 @@ func (h *Handler) DeleteBorrower(ctx *gin.Context) {
 // @Tags			Borrower
 // @Accept  		json
 // @Produce  		json
+// @Param 			query  query   pb.FilterBorrowerF   true "Query parameter"
 // @Success 		200  {object}  pb.AllBorrowers     "GetAll Successful"
-// @Failure 		401  {string}  string          "Error while GetAlld"
+// @Failure 		401  {string}  string              "Error while GetAll"
 // @Router 			/borrower/getall [get]
 func (h *Handler) GetAllBorrowers(ctx *gin.Context) {
-	res, err := h.Borrower.GetAllBorrowers(ctx, &pb.BorrowerReq{})
+	filter := pb.FilterBorrower{}
+	ctx.ShouldBindQuery(&filter)
+	res, err := h.Borrower.GetAllBorrowers(ctx, &filter)
 	if err != nil {
 		ctx.JSON(400, err.Error())
 		return
 	}
 
-	resU, err := h.User.GetAllUsers(ctx, &pb.UserReq{})
+	resU, err := h.User.GetAllIdUsers(ctx, &pb.Void{})
 	if err != nil {
 		ctx.JSON(400, err.Error())
 		return
 	}
-	
+
 	check(res, resU)
 
 	ctx.JSON(200, res)
@@ -125,7 +133,7 @@ func check(res *pb.AllBorrowers, resU *pb.AllUsers) {
 // @Produce  		json
 // @Param     		id     path    string      true   "Borrower ID"
 // @Success 		200  {object}  pb.BorrowerRes "GetById Successful"
-// @Failure 		401  {string}  string     "Error while GetByIdd"
+// @Failure 		401  {string}  string     "Error while GetById"
 // @Router 			/borrower/get/{id} [get]
 func (h *Handler) GetByIdBorrower(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}

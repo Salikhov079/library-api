@@ -29,6 +29,7 @@ func NewGin(h *handler.Handler) *gin.Engine {
 	book.DELETE("/delete/:id", h.DeleteBook)
 	book.GET("/getall", h.GetAllBooks)
 	book.GET("/get/:id", h.GetByIdBook)
+	book.GET("/overdue", h.OverdueBooks)
 
 	author := r.Group("/author")
 	author.POST("/create", h.CreateAuthor)
@@ -36,6 +37,7 @@ func NewGin(h *handler.Handler) *gin.Engine {
 	author.DELETE("/delete/:id", h.DeleteAuthor)
 	author.GET("/getall", h.GetAllAuthors)
 	author.GET("/get/:id", h.GetByIdAuthor)
+	author.GET("/:id/books", h.GetAuthorBooks)
 
 	genre := r.Group("/genre")
 	genre.POST("/create", h.CreateGenre)
@@ -43,6 +45,7 @@ func NewGin(h *handler.Handler) *gin.Engine {
 	genre.DELETE("/delete/:id", h.DeleteGenre)
 	genre.GET("/getall", h.GetAllGenres)
 	genre.GET("/get/:id", h.GetByIdGenre)
+	genre.GET("/:id/books", h.GetGenreBooks)
 
 	borrower := r.Group("/borrower")
 	borrower.POST("/create", h.CreateBorrower)

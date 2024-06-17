@@ -1,10 +1,18 @@
 package handler
 
 import (
+	"fmt"
+	"time"
+
 	pb "github.com/Salikhov079/library-api/genprotos"
 
 	"github.com/gin-gonic/gin"
 )
+
+type FilterBookF struct {
+	AuthorName string
+	Title      string
+}
 
 // @Summary 		Create Book
 // @Description 	Create page
@@ -84,13 +92,13 @@ func (h *Handler) DeleteBook(ctx *gin.Context) {
 // @Tags			Book
 // @Accept  		json
 // @Produce  		json
-// @Param 			query  query   pb.BookReq true "Query parameter"
+// @Param 			query  query   FilterBookF true "Query parameter"
 // @Success 		200  {object}  pb.AllBooks     "GetAll Successful"
-// @Failure 		401  {string}  string          "Error while GetAlld"
+// @Failure 		401  {string}  string          "Error while GetAll"
 // @Router 			/book/getall [get]
 func (h *Handler) GetAllBooks(ctx *gin.Context) {
-	book := &pb.BookReq{}
-	book.Title = ctx.Param("title")
+	book := &pb.FilterBook{}
+	ctx.ShouldBindQuery(&book)
 
 	res, err := h.Book.GetAllBooks(ctx, book)
 	if err != nil {
@@ -108,7 +116,7 @@ func (h *Handler) GetAllBooks(ctx *gin.Context) {
 // @Produce  		json
 // @Param     		id     path    string      true   "Book ID"
 // @Success 		200  {object}  pb.BookRes "GetById Successful"
-// @Failure 		401  {string}  string     "Error while GetByIdd"
+// @Failure 		401  {string}  string     "Error while GetById"
 // @Router 			/book/get/{id} [get]
 func (h *Handler) GetByIdBook(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
@@ -119,4 +127,35 @@ func (h *Handler) GetByIdBook(ctx *gin.Context) {
 	}
 
 	ctx.JSON(200, res)
+}
+
+// @Summary 		Overdue Book
+// @Description 	Overdue page
+// @Tags 			Book
+// @Accept  		json
+// @Produce  		json
+// @Success 		200  {object}  string     "Overdue Successful"
+// @Failure 		401  {string}  string     "Error while Overdue"
+// @Router 			/book/overdue [get]
+func (h *Handler) OverdueBooks(ctx *gin.Context) {
+	var count int
+	books, err := h.Borrower.GetAllIdBorrowers(ctx, &pb.Void{})
+	if err != nil {
+		ctx.JSON(400, err.Error())
+		return
+	}
+
+	for i := 0; i < len(books.Borrowers); i++ {
+		t, err := time.Parse("2006-01-02T15:04:05Z07:00", books.Borrowers[i].ReturnDate)
+		if err != nil {
+			ctx.JSON(400, err.Error())
+			return
+		}
+		if t.Before(time.Now()) {
+			count++
+			h.Borrower.DeleteBorrower(ctx, &pb.ById{Id: books.Borrowers[i].Id})
+		}
+	}
+
+	ctx.JSON(200, fmt.Sprintf("Success! %d borrower return", count))
 }

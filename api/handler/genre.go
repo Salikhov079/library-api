@@ -85,13 +85,13 @@ func (h *Handler) DeleteGenre(ctx *gin.Context) {
 // @Tags			Genre
 // @Accept  		json
 // @Produce  		json
-// @Param 			query  query   pb.Genre true "Query parameter"
+// @Param 			query  query   pb.FilterGenre true "Query parameter"
 // @Success 		200  {object}  pb.AllGenres     "GetAll Successful"
-// @Failure 		401  {string}  string          "Error while GetAlld"
+// @Failure 		401  {string}  string           "Error while GetAll"
 // @Router 			/genre/getall [get]
 func (h *Handler) GetAllGenres(ctx *gin.Context) {
-	genre := &pb.Genre{}
-	genre.Name = ctx.Param("name")
+	genre := &pb.FilterGenre{}
+	genre.Name = ctx.Query("name")
 
 	res, err := h.Genre.GetAllGenres(ctx, genre)
 	if err != nil {
@@ -108,8 +108,8 @@ func (h *Handler) GetAllGenres(ctx *gin.Context) {
 // @Accept  		json
 // @Produce  		json
 // @Param     		id     path    string      true   "Genre ID"
-// @Success 		200  {object}  pb.Genre "GetById Successful"
-// @Failure 		401  {string}  string     "Error while GetByIdd"
+// @Success 		200  {object}  pb.Genre   "GetById Successful"
+// @Failure 		401  {string}  string     "Error while GetById"
 // @Router 			/genre/get/{id} [get]
 func (h *Handler) GetByIdGenre(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
@@ -120,4 +120,23 @@ func (h *Handler) GetByIdGenre(ctx *gin.Context) {
 	}
 
 	ctx.JSON(200, res)
+}
+
+// @Summary 		GetAll Genre
+// @Description 	GetAll page
+// @Tags			Genre
+// @Accept  		json
+// @Produce  		json
+// @Param     		id     path    string      true   "Genre ID"
+// @Success 		200  {object}  pb.AllBooks     "GetAll Successful"
+// @Failure 		401  {string}  string           "Error while GetAll"
+// @Router 			/genre/{id}/books [get]
+func (h *Handler) GetGenreBooks(ctx *gin.Context) {
+	books, err := h.Book.GetAllBooks(ctx, &pb.FilterBook{GenreId: ctx.Param("id")})
+	if err != nil {
+		ctx.JSON(400, err.Error())
+		return
+	}
+
+	ctx.JSON(200, books)
 }

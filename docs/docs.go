@@ -123,7 +123,7 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetByIdd",
+                        "description": "Error while GetById",
                         "schema": {
                             "type": "string"
                         }
@@ -147,11 +147,6 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "name": "biography",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "name": "name",
                         "in": "query"
                     }
@@ -164,7 +159,7 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetAlld",
+                        "description": "Error while GetAll",
                         "schema": {
                             "type": "string"
                         }
@@ -212,6 +207,44 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Error while updated",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/author/{id}/books": {
+            "get": {
+                "description": "GetAll page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Author"
+                ],
+                "summary": "GetAll Author",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetAll Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.AllBooks"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetAll",
                         "schema": {
                             "type": "string"
                         }
@@ -327,7 +360,7 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetByIdd",
+                        "description": "Error while GetById",
                         "schema": {
                             "type": "string"
                         }
@@ -351,17 +384,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "name": "author_id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "genre_id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "summary",
+                        "name": "authorName",
                         "in": "query"
                     },
                     {
@@ -378,7 +401,36 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetAlld",
+                        "description": "Error while GetAll",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/book/overdue": {
+            "get": {
+                "description": "Overdue page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Overdue Book",
+                "responses": {
+                    "200": {
+                        "description": "Overdue Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Overdue",
                         "schema": {
                             "type": "string"
                         }
@@ -541,7 +593,7 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetByIdd",
+                        "description": "Error while GetById",
                         "schema": {
                             "type": "string"
                         }
@@ -562,6 +614,18 @@ const docTemplate = `{
                     "Borrower"
                 ],
                 "summary": "GetAll Borrower",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "borrow_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "return_date",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "GetAll Successful",
@@ -570,7 +634,7 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetAlld",
+                        "description": "Error while GetAll",
                         "schema": {
                             "type": "string"
                         }
@@ -733,7 +797,7 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetByIdd",
+                        "description": "Error while GetById",
                         "schema": {
                             "type": "string"
                         }
@@ -757,11 +821,6 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "name": "id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "name": "name",
                         "in": "query"
                     }
@@ -774,7 +833,7 @@ const docTemplate = `{
                         }
                     },
                     "401": {
-                        "description": "Error while GetAlld",
+                        "description": "Error while GetAll",
                         "schema": {
                             "type": "string"
                         }
@@ -822,6 +881,44 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Error while updated",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/genre/{id}/books": {
+            "get": {
+                "description": "GetAll page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genre"
+                ],
+                "summary": "GetAll Genre",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Genre ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetAll Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.AllBooks"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetAll",
                         "schema": {
                             "type": "string"
                         }

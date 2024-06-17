@@ -85,13 +85,13 @@ func (h *Handler) DeleteAuthor(ctx *gin.Context) {
 // @Tags			Author
 // @Accept  		json
 // @Produce  		json
-// @Param 			query  query   pb.AuthorReq true "Query parameter"
+// @Param 			query  query   pb.FilterAuthor true "Query parameter"
 // @Success 		200  {object}  pb.AllAuthors     "GetAll Successful"
-// @Failure 		401  {string}  string          "Error while GetAlld"
+// @Failure 		401  {string}  string          "Error while GetAll"
 // @Router 			/author/getall [get]
 func (h *Handler) GetAllAuthors(ctx *gin.Context) {
-	author := &pb.AuthorReq{}
-	author.Name = ctx.Param("name")
+	author := &pb.FilterAuthor{}
+	author.Name = ctx.Query("name")
 
 	res, err := h.Author.GetAllAuthors(ctx, author)
 	if err != nil {
@@ -109,7 +109,7 @@ func (h *Handler) GetAllAuthors(ctx *gin.Context) {
 // @Produce  		json
 // @Param     		id     path    string      true   "Author ID"
 // @Success 		200  {object}  pb.AuthorRes "GetById Successful"
-// @Failure 		401  {string}  string     "Error while GetByIdd"
+// @Failure 		401  {string}  string     "Error while GetById"
 // @Router 			/author/get/{id} [get]
 func (h *Handler) GetByIdAuthor(ctx *gin.Context) {
 	id := pb.ById{Id: ctx.Param("id")}
@@ -120,4 +120,23 @@ func (h *Handler) GetByIdAuthor(ctx *gin.Context) {
 	}
 
 	ctx.JSON(200, res)
+}
+
+// @Summary 		GetAll Author
+// @Description 	GetAll page
+// @Tags			Author
+// @Accept  		json
+// @Produce  		json
+// @Param     		id     path    string      true   "Author ID"
+// @Success 		200  {object}  pb.AllBooks     "GetAll Successful"
+// @Failure 		401  {string}  string          "Error while GetAll"
+// @Router 			/author/{id}/books [get]
+func (h *Handler) GetAuthorBooks(ctx *gin.Context) {
+	books, err := h.Book.GetAllBooks(ctx, &pb.FilterBook{AuthorId: ctx.Param("id")})
+	if err != nil {
+		ctx.JSON(400, err.Error())
+		return
+	}
+
+	ctx.JSON(200, books)
 }
