@@ -97,8 +97,7 @@ func (h *Handler) DeleteBook(ctx *gin.Context) {
 // @Failure 		401  {string}  string          "Error while GetAll"
 // @Router 			/book/getall [get]
 func (h *Handler) GetAllBooks(ctx *gin.Context) {
-	book := &pb.FilterBook{}
-	ctx.ShouldBindQuery(&book)
+	book := &pb.FilterBook{Title: ctx.Query("title"), AuthorName: ctx.Query("authorName")}
 
 	res, err := h.Book.GetAllBooks(ctx, book)
 	if err != nil {

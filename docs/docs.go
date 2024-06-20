@@ -216,7 +216,7 @@ const docTemplate = `{
         },
         "/author/{id}/books": {
             "get": {
-                "description": "GetAll page",
+                "description": "GetBooks page",
                 "consumes": [
                     "application/json"
                 ],
@@ -226,7 +226,7 @@ const docTemplate = `{
                 "tags": [
                     "Author"
                 ],
-                "summary": "GetAll Author",
+                "summary": "GetBooks Author",
                 "parameters": [
                     {
                         "type": "string",
@@ -238,13 +238,13 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "GetAll Successful",
+                        "description": "GetAuthorBooks Successful",
                         "schema": {
                             "$ref": "#/definitions/genprotos.AllBooks"
                         }
                     },
                     "401": {
-                        "description": "Error while GetAll",
+                        "description": "Error while GetAuthorBooks",
                         "schema": {
                             "type": "string"
                         }
@@ -617,12 +617,12 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "name": "borrow_date",
+                        "name": "borrowDate",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "return_date",
+                        "name": "returnDate",
                         "in": "query"
                     }
                 ],
@@ -890,7 +890,7 @@ const docTemplate = `{
         },
         "/genre/{id}/books": {
             "get": {
-                "description": "GetAll page",
+                "description": "GetBooks page",
                 "consumes": [
                     "application/json"
                 ],
@@ -900,7 +900,7 @@ const docTemplate = `{
                 "tags": [
                     "Genre"
                 ],
-                "summary": "GetAll Genre",
+                "summary": "GetBooks Genre",
                 "parameters": [
                     {
                         "type": "string",
@@ -912,13 +912,13 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "GetAll Successful",
+                        "description": "GetGenreBooks Successful",
                         "schema": {
                             "$ref": "#/definitions/genprotos.AllBooks"
                         }
                     },
                     "401": {
-                        "description": "Error while GetAll",
+                        "description": "Error while GetGenreBooks",
                         "schema": {
                             "type": "string"
                         }
@@ -1098,13 +1098,6 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
-        }
-    },
-    "securityDefinitions": {
-        "BearerAuth": {
-            "type": "apiKey",
-            "name": "Authourization",
-            "in": "header"
         }
     }
 }`

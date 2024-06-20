@@ -92,13 +92,12 @@ func (h *Handler) DeleteBorrower(ctx *gin.Context) {
 // @Tags			Borrower
 // @Accept  		json
 // @Produce  		json
-// @Param 			query  query   pb.FilterBorrowerF   true "Query parameter"
+// @Param 			query  query   FilterBorrowerF   true "Query parameter"
 // @Success 		200  {object}  pb.AllBorrowers     "GetAll Successful"
 // @Failure 		401  {string}  string              "Error while GetAll"
 // @Router 			/borrower/getall [get]
 func (h *Handler) GetAllBorrowers(ctx *gin.Context) {
-	filter := pb.FilterBorrower{}
-	ctx.ShouldBindQuery(&filter)
+	filter := pb.FilterBorrower{BorrowDate: ctx.Query("borrowDate"), ReturnDate: ctx.Query("returnDate")}
 	res, err := h.Borrower.GetAllBorrowers(ctx, &filter)
 	if err != nil {
 		ctx.JSON(400, err.Error())

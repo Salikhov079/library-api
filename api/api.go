@@ -15,9 +15,6 @@ import (
 // @description Library service
 // @host localhost:8081
 // @BasePath /
-// @securityDefinitions.apikey BearerAuth
-// @in header
-// @name Authourization
 func NewGin(h *handler.Handler) *gin.Engine {
 	r := gin.Default()
 

@@ -120,7 +120,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: GetAll page
+      description: GetBooks page
       parameters:
       - description: Author ID
         in: path
@@ -131,14 +131,14 @@ paths:
       - application/json
       responses:
         "200":
-          description: GetAll Successful
+          description: GetAuthorBooks Successful
           schema:
             $ref: '#/definitions/genprotos.AllBooks'
         "401":
-          description: Error while GetAll
+          description: Error while GetAuthorBooks
           schema:
             type: string
-      summary: GetAll Author
+      summary: GetBooks Author
       tags:
       - Author
   /author/create:
@@ -506,10 +506,10 @@ paths:
       description: GetAll page
       parameters:
       - in: query
-        name: borrow_date
+        name: borrowDate
         type: string
       - in: query
-        name: return_date
+        name: returnDate
         type: string
       produces:
       - application/json
@@ -560,7 +560,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: GetAll page
+      description: GetBooks page
       parameters:
       - description: Genre ID
         in: path
@@ -571,14 +571,14 @@ paths:
       - application/json
       responses:
         "200":
-          description: GetAll Successful
+          description: GetGenreBooks Successful
           schema:
             $ref: '#/definitions/genprotos.AllBooks'
         "401":
-          description: Error while GetAll
+          description: Error while GetGenreBooks
           schema:
             type: string
-      summary: GetAll Genre
+      summary: GetBooks Genre
       tags:
       - Genre
   /genre/create:
@@ -711,9 +711,4 @@ paths:
       summary: Update Genre
       tags:
       - Genre
-securityDefinitions:
-  BearerAuth:
-    in: header
-    name: Authourization
-    type: apiKey
 swagger: "2.0"

@@ -122,14 +122,14 @@ func (h *Handler) GetByIdAuthor(ctx *gin.Context) {
 	ctx.JSON(200, res)
 }
 
-// @Summary 		GetAll Author
-// @Description 	GetAll page
+// @Summary 		GetBooks Author
+// @Description 	GetBooks page
 // @Tags			Author
 // @Accept  		json
 // @Produce  		json
 // @Param     		id     path    string      true   "Author ID"
-// @Success 		200  {object}  pb.AllBooks     "GetAll Successful"
-// @Failure 		401  {string}  string          "Error while GetAll"
+// @Success 		200  {object}  pb.AllBooks     "GetAuthorBooks Successful"
+// @Failure 		401  {string}  string          "Error while GetAuthorBooks"
 // @Router 			/author/{id}/books [get]
 func (h *Handler) GetAuthorBooks(ctx *gin.Context) {
 	books, err := h.Book.GetAllBooks(ctx, &pb.FilterBook{AuthorId: ctx.Param("id")})
