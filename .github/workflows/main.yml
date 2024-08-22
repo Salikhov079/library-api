@@ -25,5 +25,10 @@ jobs:
         script: |
           pwd
           ls
+          sudo apt-get update
+          wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
+          sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+          go version
+
           cd /home/najmiddin/projects/library/library-api
           go run main.go
