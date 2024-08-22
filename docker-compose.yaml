@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+
+  # api-library
+  api-library:
+    container_name: api-library
+    build: ./
+    ports:
+      - "8080:8080"

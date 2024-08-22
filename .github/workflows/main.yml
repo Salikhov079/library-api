@@ -25,6 +25,5 @@ jobs:
         script: |
           pwd
           ls
-          export PATH=$PATH:/usr/local/go/bin
           cd /home/najmiddin/projects/library/library-api
-          go run main.go
+          sudo docker compose up -d
